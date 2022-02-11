@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FirstCanvas</title>
+</head>
+<body>
+  <div>
+    <canvas id="canvasOne" width="500" height="300">
+
+    </canvas>
+    <script>
+      var theCanvas = document.getElementById("canvasOne");
+      var context = theCanvas.getContext("2d");
+      
+      var helloWorldImage = new Image();
+        helloWorldImage.onload = function() {
+          context.drawImage(helloWorldImage, 160, 130);
+        }
+        helloWorldImage.src="html5canvas_code/ch1/helloworld.gif";
+        
+        context.strokeStyle="#000000";
+
+    </script>
+  </div>
+</body>
+</html>
