@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Composite</title>
+</head>
+<script src="html5canvas_code/ch1/modernizr-2.0.6.js"></script>
+<script type="text/javascript">
+  window.addEventListener("load",eventWindowLoaded,false);
+  var Debugger = function() { };
+  Debugger.log = 
+  function(message) { try {console.log(message);} catch (exception) { return;} }
+
+  function eventWindowLoaded () { canvasApp(); }
+  function canvasSupport() { return Modernizr.canvas; }
+  function canvasApp() {
+    if( !canvasSupport() ) { return;}
+    else {
+      var theCanvas = document.getElementById("oneCanvas");
+      var context = theCanvas.getContext("2d");
+    }
+    function drawScreen() {
+      //Debugger.log("drawScreen!!");
+      context.fillStyle = "yellow";
+      context.fillRect(10,10,200,200);
+
+      context.fillStyle = "red";
+      context.fillRect(1,1,50,50);
+      context.fillStyle= "white";
+      context.fillText("default",10,10);
+
+      context.fillStyle= "red";
+      context.globalCompositeOperation = "source-over";
+      context.fillRect(60,1,50,50);
+      context.fillStyle= "black";
+      context.fillText("source-over",60,10);
+
+      context.fillStyle= "red";
+      context.globalCompositeOperation = "destination-over";
+      context.fillRect(1,60,50,50);
+
+      context.globalAlpha = .5;
+      context.globalCompositeOperation = "source-over";
+      context.fillRect(60,60,50,50);
+      
+    }
+    drawScreen();
+  }
+</script>
+<body>
+  <div style="position:absolute; top:50px; left:50px">
+    <canvas id="oneCanvas" width="500" height="500">
+      Your browser does not support HTML5/canvas!!!
+    </canvas>
+  </div>
+</body>
+</html>

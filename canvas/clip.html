@@ -20,8 +20,34 @@
           var context = theCanvas.getContext("2d");
       }
 
+      //Debugger.log("Drawing Canvas");
       function drawScreen() {
-        //Debugger.log("drawScreen!!!")
+        context.fillStyle = "green";
+        context.fillRect(10,10,200,200);
+        context.save();
+        
+        context.beginPath();
+        context.rect(100,100,200,200);  //この範囲内だけで描画するとのこと
+        context.clip();
+
+        context.beginPath();
+        context.strokeStyle = "red";
+        context.lineWidth = 5;
+        //context.moveTo(0,0);
+        //context.lineTo(100,100);
+        context.arc(100,100,100,(Math.PI/180)*0, (Math.PI/180)*360,false);
+        context.stroke();
+        
+        context.restore();  //clip範囲解除ね
+
+        context.beginPath();
+        context.rect(0,0,500,500);
+        context.clip();
+        context.beginPath();
+        context.strokeStyle="blue";
+        context.lineWidth=5;
+        context.arc(100,100,50,(Math.PI/180)*0,(Math.PI/180)*360,false);
+        context.stroke();
       }
       drawScreen();
     }

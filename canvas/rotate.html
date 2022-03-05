@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canvas</title>
+  <title>Transform</title>
   <script src="html5canvas_code/ch1/modernizr-2.0.6.js"></script>
   <script type="text/javascript">
     window.addEventListener("load",eventWindowLoaded,false);
@@ -22,6 +22,32 @@
 
       function drawScreen() {
         //Debugger.log("drawScreen!!!")
+        context.fillStyle="black";
+        context.fillRect(20,20,25,25);
+        context.fillRect(100,100,50,50);
+        
+        context.fillStyle="blue";
+        var x = 300; var y = 100; var width = 50; var height = 50;
+        context.translate(x+.5*width,y+.5*height);
+        var angleInRadians=41*Math.PI/180;
+        context.rotate(angleInRadians);
+        context.fillRect(-.5*width,-.5*height,width,height);
+
+        context.fillStyle="red";
+        context.setTransform(1,0,0,1,0,0);
+        context.rotate(angleInRadians);
+        context.fillRect(100,100,50,50);
+        context.fillRect(20,20,25,25);
+
+        let X = [50, 150, 250,350]; var pstY = 250;
+        context.fillStyle="#00f000";
+        for(let pstX of X){
+          context.setTransform(1,0,0,1,0,0);
+          angleInRadians=pstX*Math.PI/180;
+          context.translate(pstX+.5*width,pstY+.5*height);
+          context.rotate(angleInRadians);
+          context.fillRect(-.5*width,-.5*height,width,height);
+        }
       }
       drawScreen();
     }
