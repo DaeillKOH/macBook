@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas(RadialGradient)</title>
+  <script src="html5canvas_code/ch1/modernizr-2.0.6.js"></script>
+  <script type="text/javascript">
+    window.addEventListener("load",eventWindowLoaded,false);
+    var Debugger = function() { };
+    Debugger.log = 
+    function(message) { try { console.log(message); } catch (exception) { return; } }
+
+    function eventWindowLoaded () { canvasApp(); }
+    function canvasSupport() { return Modernizr.canvas; }
+    function canvasApp() {
+      if( !canvasSupport() ) { return; }
+      else {
+          var theCanvas = document.getElementById("canvasOne");
+          var context = theCanvas.getContext("2d");
+      }
+
+      function drawScreen() {
+        //Debugger.log("drawScreen!!!")
+        context.strokeRect(0,0,800,500);
+
+        var sX = 100; var sY=100; var fX=100; var fY=100; var r=100;
+
+        var gr=context.createRadialGradient(sX,   //開始円のx　
+                                            sY,   //開始円のy
+                                            r/4,   //開始円の半径
+                                            fX,   //終了円のx
+                                            fY,   //終了円のy
+                                            r); //終了円の半径
+        gr.addColorStop(0,'rgb(255,0,0)');
+        gr.addColorStop(.5,'rgb(0,255,0)');
+        gr.addColorStop(1,'rgb(255,0,0)');
+        
+        context.fillStyle=gr;
+        context.fillRect(0,0,2*fX,2*fY);
+
+        //円の中心点を50pxずらす  右側に200px移動
+        var diffR=50; var moveX=250;
+        gr=context.createRadialGradient(sX+moveX-diffR,   //開始円のx　
+                                        sY-diffR,   //開始円のy
+                                        r/4,   //開始円の半径
+                                        fX+moveX,   //終了円のx
+                                        fY,   //終了円のy
+                                        r); //終了円の半径
+        gr.addColorStop(0,'rgb(0,0,255)');
+        gr.addColorStop(.5,'rgb(0,255,0)');
+        gr.addColorStop(1,'rgb(0,255,0)');
+        
+        context.fillStyle=gr;
+        context.fillRect(moveX,0,200,200);
+
+        //円形グラデーション   y軸で250px移動
+        var moveY=250;
+        gr=context.createRadialGradient(sX,   //開始円のx　
+                                        sY+moveY,   //開始円のy
+                                        r/6,   //開始円の半径
+                                        fX,   //終了円のx
+                                        fY+moveY,   //終了円のy
+                                        r); //終了円の半径
+        gr.addColorStop(0,'rgb(255,0,0)');
+        gr.addColorStop(.5,'rgb(0,255,0)');
+        gr.addColorStop(1,'rgb(0,0,255)');
+        
+        context.fillStyle=gr;
+        context.arc(sX,sY+moveY,r,(Math.PI/180)*0,(Math.PI/180)*360,false);
+        context.fill();
+        
+        //新しいfill()のため必要
+        context.beginPath();
+
+        //円形グラデーション   y軸で250px移動+x軸で250px移動＆円の中心点を50pxずらす
+        gr=context.createRadialGradient(sX+moveX+diffR,   //開始円のx　
+                                        sY+moveY+diffR,   //開始円のy
+                                        r/6,   //開始円の半径
+                                        fX+moveX,   //終了円のx
+                                        fY+moveY,   //終了円のy
+                                        r); //終了円の半径
+        gr.addColorStop(0,'rgb(255,0,0)');
+        gr.addColorStop(.8,'rgb(0,255,0)');
+        gr.addColorStop(1,'rgb(0,0,255)');
+        
+        context.fillStyle=gr;
+        context.arc(sX+moveX,sY+moveY,r,(Math.PI/180)*0,(Math.PI/180)*360,false);
+        context.fill();
+
+        //円形グラデーション   y軸で250px移動+x軸で250px移動＆円の中心点を50pxずらす
+        gr=context.createRadialGradient(sX+moveX+diffR,   //開始円のx　
+                                        sY+moveY+diffR,   //開始円のy
+                                        r/6,   //開始円の半径
+                                        fX+moveX,   //終了円のx
+                                        fY+moveY,   //終了円のy
+                                        r); //終了円の半径
+        gr.addColorStop(0,'rgb(255,0,0)');
+        gr.addColorStop(.8,'rgb(0,255,0)');
+        gr.addColorStop(1,'rgb(0,0,255)');
+      
+        context.fillStyle=gr;
+        context.arc(sX+moveX,sY+moveY,r,(Math.PI/180)*0,(Math.PI/180)*360,false);
+
+        context.beginPath();
+        //円形輪郭グラデーション   x軸で500px移動
+        gr=context.createRadialGradient(sX+moveX*2,   //開始円のx　
+                                        sY,   //開始円のy
+                                        r/2,   //開始円の半径
+                                        fX+moveX*2+diffR,   //終了円のx
+                                        fY+diffR,   //終了円のy
+                                        r); //終了円の半径
+        gr.addColorStop(0,'rgb(255,0,0)');
+        gr.addColorStop(.8,'rgb(0,255,0)');
+        gr.addColorStop(1,'rgb(0,0,255)');
+        
+        context.strokeStyle=gr;
+        context.arc(sX+moveX*2,sY,r/2,(Math.PI/180)*0,(Math.PI/180)*360,false);
+        context.stroke();
+      }
+      drawScreen();
+    }
+  </script>
+</head>
+<body>
+  <div style="position:absolute; top: 10px; left: 10px;">
+    <canvas id="canvasOne" width="800" height="500">
+      Your browser does not support HTML5 Canvas.
+    </canvas>
+  </div>
+</body>
+</html>

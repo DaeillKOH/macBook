@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canvas</title>
+  <title>Canvas(Repeat)</title>
   <script src="html5canvas_code/ch1/modernizr-2.0.6.js"></script>
   <script type="text/javascript">
     window.addEventListener("load",eventWindowLoaded,false);
@@ -22,7 +22,28 @@
 
       function drawScreen() {
         //Debugger.log("drawScreen!!!")
-        context.strokeRect(0,0,theCanvas.width,theCanvas.height);
+        context.strokeRect(0,0,800,500);
+
+        var fillImg = new Image();
+        fillImg.onload = function() {
+          var fillPattern = context.createPattern(fillImg,'repeat');
+          var fillPattern1 = context.createPattern(fillImg,'no-repeat');
+          var fillPattern2 = context.createPattern(fillImg,'repeat-x');
+          var fillPattern3 = context.createPattern(fillImg,'repeat-y');
+
+          context.fillStyle=fillPattern1;
+          context.fillRect(0,0,100,100);
+
+          context.fillStyle=fillPattern2;
+          context.fillRect(0,110,100,100);
+
+          context.fillStyle=fillPattern3;
+          context.fillRect(0,220,100,100);
+
+          context.fillStyle=fillPattern;
+          context.fillRect(300,0,200,200);
+        }
+        fillImg.src = '../html5canvas_code/ch2/fill_20x20.gif';
       }
       drawScreen();
     }
