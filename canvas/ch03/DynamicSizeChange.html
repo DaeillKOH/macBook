@@ -11,6 +11,7 @@
     Debugger.log = 
     function(message) { try { console.log(message); } catch (exception) { return; } }
 
+
     function eventWindowLoaded () { canvasApp(); }
     function canvasSupport() { return Modernizr.canvas; }
     function canvasApp() {
@@ -23,8 +24,24 @@
       function drawScreen() {
         //Debugger.log("drawScreen!!!")
         context.strokeRect(0,0,theCanvas.width,theCanvas.height);
+
+        context.fillText("Your Text Here!",theCanvas.width/2,theCanvas.height/2);
       }
       drawScreen();
+      
+      formElement = document.getElementById("canvasStyleWidth");
+      formElement.addEventListener('change',canvasStyleChanged,false);
+      formElement = document.getElementById("canvasStyleHeight");
+      formElement.addEventListener('change',canvasStyleChanged,false);
+      
+      function canvasStyleChanged(e) {
+        var styleWidth = document.getElementById("canvasStyleWidth");
+        var styleHeight = document.getElementById("canvasStyleHeight");
+        var styleValue = "width: " + styleWidth.value + "px; height: " + 
+          styleHeight.value + "px;";
+        theCanvas.setAttribute("style",styleValue);
+        drawScreen();
+      }
     }
   </script>
 </head>
@@ -33,6 +50,12 @@
     <canvas id="canvasOne" width="800" height="500">
       Your browser does not support HTML5 Canvas.
     </canvas>
+    <br>
+    Canvas Style Width:
+    <input type="range" id="canvasStyleWidth" min="0" max="800" step="1" value="500">
+    <br>
+    Canvas Style Height:
+    <input type="range" id="canvasStyleHeight" min="0" max="400" step="1" value="250">
   </div>
 </body>
 </html>

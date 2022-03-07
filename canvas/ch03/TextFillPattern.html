@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas(TextArranger1)</title>
+  <script src="../html5canvas_code/ch1/modernizr-2.0.6.js"></script>
+  <script type="text/javascript" src="../html5canvas_code/ch3/jscolor/jscolor.js"></script>
+  <script type="text/javascript">
+    window.addEventListener("load",eventWindowLoaded,false);
+    var Debugger = function() { };
+    Debugger.log = 
+    function(msg) { try { console.log(msg); } catch (exception) { return; } }
+
+    function eventWindowLoaded () { canvasApp(); }
+    function canvasSupport() { return Modernizr.canvas; }
+    function canvasApp() {
+      if( !canvasSupport() ) { return; }
+      else {
+          var theCanvas = document.getElementById("canvasOne");
+          var context = theCanvas.getContext("2d");
+      }
+      var message = "your text";    var fillOrStroke = "fill";
+      var fontFace = "serif";
+      var textSize = "50";        var fontWeight = "normal";
+      var fontStyle = "normal";   var textFillColor = "#FF0000";
+      var textBaseline = "middle";  var textAlign = "start";
+      var textAlpha = 1;
+      var shadowColor = "#FF0000";   var shadowBlur = 1;
+      var shadowX = 1;               var shadowY = 1;
+
+      var formEventElement = document.getElementById("textBox");
+      formEventElement.addEventListener('keyup',textBoxChanged, false);
+
+      var formEventElement = document.getElementById("fillOrStroke");
+      formEventElement.addEventListener('change',fillOrStrokeChanged, false);
+
+      var formEventElement = document.getElementById("fontFace");
+      formEventElement.addEventListener('change',textFontChanged,false);
+
+      var formEventElement = document.getElementById("textSize");
+      formEventElement.addEventListener('change',textSizeChanged,false);
+
+      var formEventElement = document.getElementById("fontWeight");
+      formEventElement.addEventListener('change',fontWeightChanged,false);
+
+      var formEventElement = document.getElementById("fontStyle");
+      formEventElement.addEventListener('change',fontStyleChanged,false);
+
+      var formEventElement = document.getElementById("textFillColor");
+      formEventElement.addEventListener('change',textFillColorChanged,false);
+
+      var formEventElement = document.getElementById("textBaseline");
+      formEventElement.addEventListener('change',textBaselineChanged,false);
+
+      var formEventElement = document.getElementById("textAlign");
+      formEventElement.addEventListener('change',textAlignChanged,false);
+
+      var formEventElement = document.getElementById("textAlpha");
+      formEventElement.addEventListener('change',textAlphaChanged,false);
+
+      var formEventElement = document.getElementById("shadowX");
+      formEventElement.addEventListener('change',shadowXChanged,false);
+
+      var formEventElement = document.getElementById("shadowY");
+      formEventElement.addEventListener('change',shadowYChanged,false);
+
+      var formEventElement = document.getElementById("shadowBlur");
+      formEventElement.addEventListener('change',shadowBlurChanged,false);
+
+      drawScreen();
+      
+      function drawScreen() {
+        //Debugger.log("drawScreen!!!");
+
+        //canvas初期化
+        context.globalAlpha = 1;
+        context.fillStyle = "#ffffaa";  
+        context.shadowColor = "#707070";
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.shadowBlur = 0;
+
+        context.fillRect(0,0,theCanvas.width,theCanvas.height);
+
+        context.strokeStyle = "#000000";
+        context.strokeRect(5,5,theCanvas.width-10,theCanvas.height-10);
+
+        context.font = fontWeight+" "+fontStyle+" "+textSize+"px "+fontFace;
+        context.textAlign = textAlign;
+        context.textBaseline = textBaseline;
+        context.globalAlpha = textAlpha;
+
+        var metrics = context.measureText(message);
+        var textWidth = metrics.width;
+        var xPosition = (theCanvas.width/2) - (textWidth/2);
+        var yPosition = theCanvas.height/2 ;
+
+        context.shadowColor = textFillColor;
+        context.shadowOffsetX = shadowX;
+        context.shadowOffsetY = shadowY;
+        context.shadowBlur = shadowBlur;
+
+        var pattern = new Image();
+        //context.createPattern('../html5canvas_code/ch3/texture.jpg',"repeat");
+        pattern.src = '../html5canvas_code/ch3/texture.jpg';
+        pattern.onload = function() {
+          var fillPattern = context.createPattern(pattern,"repeat");
+          switch( fillOrStroke ){
+          case "fill":
+            context.fillStyle = fillPattern;
+            context.fillText(message,xPosition,yPosition);
+            break;
+          case "stroke":
+            context.strokeStyle = fillPattern;
+            context.strokeText(message,xPosition,yPosition);
+            break;
+          case "both":
+            context.fillStyle = fillPattern;
+            context.fillText(message,xPosition,yPosition);
+            context.strokeStyle = "black";
+            context.strokeText(message,xPosition,yPosition);
+            break;
+          }
+        }
+      }
+
+      function textBoxChanged(e) {
+        var target = e.target;  message = target.value;  drawScreen();
+      }
+      function fillOrStrokeChanged(e){
+        var target = e.target;    fillOrStroke = target.value;  drawScreen();
+      }
+      function textFontChanged(e){
+        var target = e.target;    fontFace = target.value;  drawScreen();
+      }
+      function textSizeChanged(e){
+        var target = e.target;    textSize = target.value;  drawScreen();
+      }
+      function fontWeightChanged(e){
+        var target = e.target;    fontWeight = target.value;  drawScreen();
+      }
+      function fontStyleChanged(e){
+        var target = e.target;    fontStyle = target.value;  drawScreen();
+      }
+      function textFillColorChanged(e){
+        var target = e.target;    textFillColor = "#"+target.value;  drawScreen();
+      }
+      function textBaselineChanged(e){
+        var target = e.target;    textBaseline = target.value;  drawScreen();
+      }
+      function textAlignChanged(e){
+        var target = e.target;    textAlign = target.value;  drawScreen();
+      }
+      function textAlphaChanged(e){
+        var target = e.target;    textAlpha = target.value;  drawScreen();
+      }
+      function shadowXChanged(e){
+        var target = e.target;    shadowX = target.value;  drawScreen();
+      }
+      function shadowYChanged(e){
+        var target = e.target;    shadowY = target.value;  drawScreen();
+      }
+      function shadowBlurChanged(e){
+        var target = e.target;    shadowBlur = target.value;  drawScreen();
+      }
+    }
+  </script>
+</head>
+<body>
+  <div style="position:absolute; top: 10px; left: 10px;">
+    <canvas id="canvasOne" width="600" height="300">
+      Your browser does not support HTML5 Canvas.
+    </canvas>
+    <form>Text: <input id="textBox" placeholder="your text"><br></form>
+    Fill Or Stroke:
+    <select id = "fillOrStroke">
+      <option value = "fill">fill</option>
+      <option value = "stroke">stroke</option>
+      <option value = "both">both</option>
+    </select><br>
+    Text Font:
+    <select id = "fontFace">
+      <option value = "serif">serif</option>
+      <option value = "sans-serif">sans-serif</option>
+      <option value = "cursive">cursive</option>
+      <option value = "fantasy">fantasy</option>
+      <option value = "monospace">monospace</option>
+    </select><br>
+    Text Size:
+    <input type = "range" id = "textSize" min = "0" max= "200" step = "1" value = "50">
+    <br>
+    Text Color:
+    <input class = "color" id="textFillColor" value="ff0000">
+    <br>
+    Font Weight:
+    <select id = "fontWeight">
+      <option value = "normal">normal</option>
+      <option value = "bold">bold</option>
+      <option value = "bolder">bolder</option>
+      <option value = "lighter">lighter</option>
+    </select>
+    <br>
+    Font Style:
+    <select id = "fontStyle">
+      <option value = "normal">normal</option>
+      <option value = "italic">italic</option>
+      <option value = "oblique">oblique</option>
+    </select>
+    <br>
+    Text Baseline:
+    <select id = "textBaseline">
+      <option value = "middle">middle</option>
+      <option value = "top">top</option>
+      <option value = "hanging">hanging</option>
+      <option value = "alphabetic">alphabetic</option>
+      <option value = "ideographic">ideographic</option>
+      <option value = "bottom">bottom</option>
+    </select>
+    <br>
+    Text Align:
+    <select id = "textAlign">
+      <option value = "center">center</option>
+      <option value = "start">start</option>
+      <option value = "end">end</option>
+      <option value = "left">left</option>
+      <option value = "right">right</option>
+    </select>
+    <br>
+    Text Alpha:
+    <input type = "range" id = "textAlpha" min = "0.0" max= "1.0" step = "0.01" value = "1.0">
+    <br>
+    Shadow X:
+    <input type = "range" id = "shadowX" min = "-100" max= "100" step = "1" value = "1">
+    <br>
+    Shadow Y:
+    <input type = "range" id = "shadowY" min = "-100" max= "100" step = "1" value = "1">
+    <br>
+    Shadow Blur:
+    <input type = "range" id = "shadowBlur" min = "1" max= "20" step = "1" value = "1">
+  </div>
+</body>
+</html>

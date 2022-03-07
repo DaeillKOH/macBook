@@ -23,9 +23,25 @@
       function drawScreen() {
         //Debugger.log("drawScreen!!!")
         context.strokeRect(0,0,theCanvas.width,theCanvas.height);
+
+        placeShip(context, spaceShip,0,0);
+        placeShip(context,spaceShip,100,100,64,64);
       }
       drawScreen();
+
     }
+
+    var spaceShip = new Image();
+    spaceShip.src = '../html5canvas_code/ch4/ship1.png';
+    //spaceShip.addEventListener('load',eventShipLoaded,false);
+    function placeShip(context, obj, posX, posY, width, height) {
+      if( width && height ) {
+        context.drawImage(obj,posX,posY,width,height);
+      } else {
+        context.drawImage(obj,posX,posY);
+      }
+    }
+
   </script>
 </head>
 <body>
